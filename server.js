@@ -27,9 +27,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
 
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/NintendoScraper", {
-  useMongoClient: true
-});
+// mongoose.connect("mongodb://localhost/NintendoScraper", {
+//   useMongoClient: true
+// });
+var dbConnect = process.env.MONGODB_URI || "mongodb://localhost/NintendoScraper";
+
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI)
+} else {
+  mongoose.connect(dbConnect);
+}
+
 
 // Routes
 
